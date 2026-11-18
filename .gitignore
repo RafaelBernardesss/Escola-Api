@@ -1,0 +1,4 @@
+node_modules
+.env
+src/prisma/*.db
+src/prisma/*.db-journal

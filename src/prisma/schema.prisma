@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Série / turma (ex.: "6º Ano A", "1º Ano EM")
+model Serie {
+  id        Int        @id @default(autoincrement())
+  nome      String     @unique
+  criadoEm  DateTime   @default(now())
+  alunos    Aluno[]
+  presencas Presenca[]
+}
+
+// Aluno cadastrado somente com o nome
+model Aluno {
+  id        Int        @id @default(autoincrement())
+  nome      String
+  serieId   Int
+  serie     Serie      @relation(fields: [serieId], references: [id], onDelete: Cascade)
+  criadoEm  DateTime   @default(now())
+  presencas Presenca[]
+
+  @@index([serieId])
+}
+
+// Registro de chamada: um aluno, em uma data (YYYY-MM-DD), presente ou faltou
+model Presenca {
+  id       Int     @id @default(autoincrement())
+  data     String
+  presente Boolean @default(true)
+  alunoId  Int
+  aluno    Aluno   @relation(fields: [alunoId], references: [id], onDelete: Cascade)
+  serieId  Int
+  serie    Serie   @relation(fields: [serieId], references: [id], onDelete: Cascade)
+
+  @@unique([alunoId, data])
+  @@index([serieId, data])
+}
