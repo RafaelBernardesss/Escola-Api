@@ -10,6 +10,8 @@ npm run seed           # (opcional) cria as séries iniciais
 npm start
 ```
 
+O servidor também aplica as migrations sozinho ao iniciar (desative com `SKIP_MIGRATE=true`).
+
 Ou, de uma vez só: `npm run start:prod` (aplica as migrations e sobe o servidor).
 
 > Use `migrate:deploy` em produção. `prisma:migrate` (migrate dev) é só para desenvolvimento.
