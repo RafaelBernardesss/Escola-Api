@@ -24,7 +24,7 @@ function errorHandler(err, req, res, next) {
     return res.status(404).json({ erro: 'Registro não encontrado.' });
   }
 
-  console.error(err);
+  console.error(`[${req.method} ${req.originalUrl}] ${err.code || err.name}:`, err.message);
   return res.status(500).json({ erro: 'Erro interno do servidor.' });
 }
 

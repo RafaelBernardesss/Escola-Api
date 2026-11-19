@@ -10,7 +10,10 @@
     "prisma:migrate": "prisma migrate dev",
     "prisma:push": "prisma db push",
     "prisma:studio": "prisma studio",
-    "seed": "node src/prisma/seed.js"
+    "seed": "node src/prisma/seed.js",
+    "postinstall": "prisma generate",
+    "migrate:deploy": "prisma migrate deploy",
+    "start:prod": "prisma migrate deploy && node src/server.js"
   },
   "prisma": {
     "schema": "src/prisma/schema.prisma"
