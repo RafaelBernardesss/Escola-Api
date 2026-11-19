@@ -16,8 +16,13 @@ router.get('/health', async (req, res) => {
     res.json({ ok: true, db: 'ok', series });
   } catch (err) {
     console.error('Falha no banco de dados:', err);
-  
-    res.status(500).json({ ok: false, db: 'erro', codigo: err.code || err.errorCode || err.name });
+    // "detalhe" é só para diagnóstico: remova depois que tudo funcionar.
+    res.status(500).json({
+      ok: false,
+      db: 'erro',
+      codigo: err.code || err.errorCode || err.name,
+      detalhe: String(err.message || '').replace(/\s+/g, ' ').slice(-600),
+    });
   }
 });
 
